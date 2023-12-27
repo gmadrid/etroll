@@ -1,0 +1,18 @@
+[package]
+name = "etroll"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+env_logger = "0.10.1"
+logger = "0.4.0"
+oagain = { version = "0.1.0", path = "../oagain" }
+quick-xml = { version = "0.31.0", features = ["serialize"] }
+thiserror = "1.0.52"
+url = "2.5.0"
+serde = { version = "1.0.193", features = ["derive"] }
+log = "0.4.20"
+
+[lib]
