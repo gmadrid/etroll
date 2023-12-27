@@ -1,4 +1,5 @@
-use etroll::{ETrade, Result};
+use etroll::ETrade;
+use etroll::Result;
 
 fn main() -> Result<()> {
     env_logger::init();
