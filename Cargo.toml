@@ -14,5 +14,8 @@ thiserror = "1.0.52"
 url = "2.5.0"
 serde = { version = "1.0.193", features = ["derive"] }
 log = "0.4.20"
+inquire = "0.6.2"
+tabled = "0.15.0"
+argh = "0.1.12"
 
 [lib]
