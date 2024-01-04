@@ -1,10 +1,13 @@
 use inquire::Select;
 use std::fmt::Display;
+use std::path::PathBuf;
 
 use argh::FromArgs;
+use directories::ProjectDirs;
 use etroll::ETrade;
 use etroll::Result;
 use log::info;
+use tabled::settings::Style;
 use tabled::{Table, Tabled};
 
 #[derive(FromArgs, PartialEq, Debug)]
@@ -86,9 +89,36 @@ fn balances_cmd(etrade: &mut ETrade, _balances: Balances) -> Result<()> {
         ),
     ];
 
-    println!("{}", Table::new(output_vec).to_string());
+    println!(
+        "{}",
+        Table::new(output_vec).with(Style::rounded()).to_string()
+    );
 
     Ok(())
+}
+
+fn default_secrets_file() -> PathBuf {
+    if cfg!(debug_assertions) {
+        PathBuf::from("my_secrets.toml")
+    } else {
+        ProjectDirs::from("com", "scrawlsoft", "etroll")
+            // unwrap: this should fail if it fails
+            .unwrap()
+            .config_dir()
+            .join("secrets.toml")
+    }
+}
+
+fn default_config_save_file() -> PathBuf {
+    if cfg!(debug_assertions) {
+        PathBuf::from("my_save.toml")
+    } else {
+        ProjectDirs::from("com", "scrawlsoft", "etroll")
+            // unwrap: this should fail if it fails
+            .unwrap()
+            .config_local_dir()
+            .join("save.toml")
+    }
 }
 
 fn main() -> Result<()> {
@@ -97,8 +127,8 @@ fn main() -> Result<()> {
     let cmd_line: TopLevel = argh::from_env();
 
     let mut etrade = ETrade::builder()
-        .use_secrets_file("my_secrets.toml")
-        .use_save_file("my_save.toml")
+        .use_secrets_file(default_secrets_file())
+        .use_save_file(default_config_save_file())
         .build()?;
 
     let TopLevel { nested } = cmd_line;

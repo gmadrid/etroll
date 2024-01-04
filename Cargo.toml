@@ -17,5 +17,6 @@ log = "0.4.20"
 inquire = "0.6.2"
 tabled = "0.15.0"
 argh = "0.1.12"
+directories = "5.0.1"
 
 [lib]
